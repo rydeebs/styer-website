@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:#0A1022;font-family:'Barlow',system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  a{text-decoration:none;}
+  ::selection{background:#FF5A1F;color:#0A1022;}
+  @keyframes emberPulse{0%,100%{opacity:.82;}50%{opacity:1;}}
+  @keyframes emberShift{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-12px) scale(1.04);}}
+</style>
+</helmet>
+
+<div data-screen-label="Homepage" style="background:#0A1022;color:#F6F4EF;overflow-x:hidden;">
+
+  <!-- Palette switcher (design control) -->
+  <div style="position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:200;display:flex;align-items:center;gap:7px;background:rgba(10,16,34,.86);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:7px 9px 7px 16px;box-shadow:0 12px 40px rgba(0,0,0,.5);">
+    <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#7E88AC;">Palette</span>
+    <sc-for list="{{ palettes }}" as="p" hint-placeholder-count="4">
+      <button onClick="{{ p.onSelect }}" style="{{ p.btnStyle }}">{{ p.label }}</button>
+    </sc-for>
+  </div>
+
+  <!-- Utility bar -->
+  <div style="background:#070B18;border-bottom:1px solid rgba(255,255,255,.06);padding:9px clamp(20px,5vw,80px);display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;font-size:13.5px;color:#9AA3C0;">
+    <span style="display:inline-flex;align-items:center;gap:8px;letter-spacing:.2px;"><i class="ph-bold ph-map-pin" style="color:#FF5A1F;font-size:15px;"></i>Serving Chester, Montgomery, Delaware &amp; Berks Counties, PA</span>
+    <a href="tel:6104588389" style="display:inline-flex;align-items:center;gap:8px;color:#F6F4EF;font-weight:600;letter-spacing:.3px;"><i class="ph-bold ph-clock" style="color:#7E88AC;font-size:15px;"></i>Mon–Fri 8a–4:30p · 24/7 emergency line</a>
+  </div>
+
+  <!-- Header -->
+  <header style="position:sticky;top:0;z-index:100;background:rgba(10,16,34,.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08);padding:14px clamp(20px,5vw,80px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+    <a href="#" style="display:inline-flex;align-items:center;">
+      <img src="assets/styer-logo-white.png" alt="Styer Propane, LLC" style="height:52px;width:auto;display:block;" />
+    </a>
+    <nav style="display:flex;align-items:center;gap:clamp(14px,1.6vw,28px);flex-wrap:wrap;font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:1px;font-size:15.5px;">
+      <a href="#" style="color:#F6F4EF;" style-hover="color:#FF5A1F;">Home</a>
+      <a href="#payment" style="color:#C2C9DE;" style-hover="color:#FF5A1F;">Payment</a>
+      <a href="#" style="color:#C2C9DE;" style-hover="color:#FF5A1F;">Budget Plan</a>
+      <a href="#safety" style="color:#C2C9DE;" style-hover="color:#FF5A1F;">Safety</a>
+      <a href="#" style="color:#C2C9DE;" style-hover="color:#FF5A1F;">FAQs</a>
+      <a href="#blog" style="color:#C2C9DE;" style-hover="color:#FF5A1F;">Blog</a>
+      <a href="#" style="color:#C2C9DE;" style-hover="color:#FF5A1F;">Contact</a>
+    </nav>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="tel:6104588389" style="display:none;align-items:center;gap:8px;color:#F6F4EF;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:19px;letter-spacing:.5px;"></a>
+      <a href="#" style="display:inline-flex;align-items:center;gap:9px;background:#FF5A1F;color:#0A1022;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:16px;padding:12px 20px;border-radius:5px;box-shadow:0 8px 22px rgba(255,90,31,.32);" style-hover="background:#FF6F3C;">Schedule a Delivery<i class="ph-bold ph-arrow-right"></i></a>
+    </div>
+  </header>
+
+  <!-- ============ HERO C: diagonal split + team photo ============ -->
+  <section data-screen-label="Hero" style="position:relative;overflow:hidden;background:#0A1022;min-height:clamp(580px,84vh,820px);">
+    <!-- Team photo -->
+    <img src="assets/hero-team.png" alt="The Styer Propane team in front of a delivery truck" style="position:absolute;top:0;bottom:0;right:0;width:clamp(400px,54%,860px);height:100%;object-fit:cover;object-position:55% 46%;" />
+    <!-- Vignette: keep center sharp, fade edges to background color -->
+    <div style="position:absolute;inset:0;background:radial-gradient(120% 96% at 70% 44%, transparent 16%, rgba(10,16,34,.5) 56%, rgba(10,16,34,.97) 100%);"></div>
+    <!-- Seam fade: blend the photo into the colored field along the diagonal -->
+    <div style="position:absolute;inset:0;background:linear-gradient(100deg, rgba(10,16,34,.92) 38%, rgba(10,16,34,.35) 55%, transparent 70%);"></div>
+    <!-- Diagonal accent line, aligned to the field's edge -->
+    <div style="position:absolute;inset:0;z-index:2;background:linear-gradient(115deg,#FF6F3C,#E8430A);clip-path:polygon(64% 0, calc(64% + 6px) 0, calc(46% + 6px) 100%, 46% 100%);box-shadow:0 0 26px rgba(255,90,31,.55);"></div>
+    <!-- Left colored field with diagonal right edge (palette-driven) -->
+    <div style="{{ fieldStyle }}">
+      <div style="{{ glowStyle }}"></div>
+      <div style="position:relative;max-width:500px;">
+        <span style="{{ kickerStyle }}"><i class="ph-fill ph-flame" style="color: {{ accentColor }};"></i>Fire · Power · Heat</span>
+        <h1 style="{{ h1Style }}">Reliable Propane.<br>Trusted Locally.</h1>
+        <p style="{{ subStyle }}">Family-owned propane delivery for Chester County and the greater Philadelphia area. Decades of dependable heat.</p>
+      </div>
+    </div>
+    <!-- Bottom action bar: CTAs + call-to-order on one line -->
+    <div style="position:absolute;left:0;right:0;bottom:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;padding:clamp(20px,3vw,40px) clamp(28px,5vw,56px);">
+      <div style="display:flex;flex-wrap:wrap;gap:14px;">
+        <a href="#" style="{{ ctaPrimaryStyle }}">Schedule a Delivery<i class="ph-bold ph-arrow-right"></i></a>
+        <a href="#payment" style="{{ ctaOutlineStyle }}">View Your Account</a>
+      </div>
+      <a href="tel:6104588389" style="display:flex;align-items:center;gap:14px;background:rgba(7,11,24,.82);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:13px 20px;color:#F6F4EF;box-shadow:0 16px 40px rgba(0,0,0,.5);">
+        <span style="flex:none;width:50px;height:50px;border-radius:50%;background: {{ phoneAccent }};display:inline-flex;align-items:center;justify-content:center;box-shadow:0 8px 22px rgba(0,0,0,.3);"><i class="ph-fill ph-phone-call" style="color: {{ phoneAccentIcon }};font-size:23px;"></i></span>
+        <span><span style="display:block;font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:2px;font-size:12px;color:#9AA3C0;">Call to order</span><span style="display:block;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(26px,3.2vw,38px);line-height:.95;letter-spacing:.5px;">(610) 458-8389</span></span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ Services / trust strip ============ -->
+  <section style="background:#0E1530;border-top:1px solid rgba(255,255,255,.06);padding:clamp(48px,6vw,80px) clamp(20px,5vw,80px);">
+    <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;">
+      <div style="background:#141C3A;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:28px 26px;" style-hover="border-color:rgba(255,90,31,.45);">
+        <span style="width:50px;height:50px;border-radius:11px;background:rgba(255,90,31,.12);display:inline-flex;align-items:center;justify-content:center;"><i class="ph-bold ph-truck" style="color:#FF5A1F;font-size:26px;"></i></span>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:23px;margin:18px 0 6px;color:#F6F4EF;">Residential Delivery</h3>
+        <p style="margin:0;color:#9AA3C0;font-size:15.5px;line-height:1.5;">Automatic &amp; will-call propane, delivered right to your door.</p>
+      </div>
+      <div style="background:#141C3A;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:28px 26px;" style-hover="border-color:rgba(255,90,31,.45);">
+        <span style="width:50px;height:50px;border-radius:11px;background:rgba(255,90,31,.12);display:inline-flex;align-items:center;justify-content:center;"><i class="ph-bold ph-wallet" style="color:#FF5A1F;font-size:26px;"></i></span>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:23px;margin:18px 0 6px;color:#F6F4EF;">Budget Plans</h3>
+        <p style="margin:0;color:#9AA3C0;font-size:15.5px;line-height:1.5;">Spread your costs evenly across the year — no winter surprises.</p>
+      </div>
+      <div style="background:#141C3A;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:28px 26px;" style-hover="border-color:rgba(255,90,31,.45);">
+        <span style="width:50px;height:50px;border-radius:11px;background:rgba(255,90,31,.12);display:inline-flex;align-items:center;justify-content:center;"><i class="ph-bold ph-buildings" style="color:#FF5A1F;font-size:26px;"></i></span>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:23px;margin:18px 0 6px;color:#F6F4EF;">Commercial</h3>
+        <p style="margin:0;color:#9AA3C0;font-size:15.5px;line-height:1.5;">Dependable supply that keeps your business running.</p>
+      </div>
+      <div style="background:#141C3A;border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:28px 26px;" style-hover="border-color:rgba(255,90,31,.45);">
+        <span style="width:50px;height:50px;border-radius:11px;background:rgba(255,90,31,.12);display:inline-flex;align-items:center;justify-content:center;"><i class="ph-bold ph-shield-check" style="color:#FF5A1F;font-size:26px;"></i></span>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:23px;margin:18px 0 6px;color:#F6F4EF;">Safety Resources</h3>
+        <p style="margin:0;color:#9AA3C0;font-size:15.5px;line-height:1.5;">Guides, tips, and a 24/7 line whenever you need us.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ About ============ -->
+  <section style="background:#F6F4EF;color:#0A1022;padding:clamp(64px,9vw,120px) clamp(20px,5vw,80px);">
+    <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(40px,5vw,72px);align-items:center;">
+      <div>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:3px;font-size:15px;color:#E8430A;">Who we are</span>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(42px,5.5vw,74px);line-height:.92;letter-spacing:-.5px;margin:12px 0 0;">Local. Family.<br><span style="color:#FF5A1F;">Trusted.</span></h2>
+        <p style="margin:22px 0 0;font-size:clamp(17px,1.5vw,19px);line-height:1.6;color:#3C4256;max-width:540px;">We're your neighbors in Chester Springs. For decades, the Styer family has kept Pennsylvania homes and businesses warm — with fair prices, dependable delivery, and a real person who picks up the phone.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;">
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.8px;font-size:15px;background:#0A1022;color:#F6F4EF;padding:9px 16px;border-radius:999px;">Chester County</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.8px;font-size:15px;background:#fff;border:1.5px solid #DAD5CB;color:#0A1022;padding:9px 16px;border-radius:999px;">Montgomery County</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.8px;font-size:15px;background:#fff;border:1.5px solid #DAD5CB;color:#0A1022;padding:9px 16px;border-radius:999px;">Delaware County</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.8px;font-size:15px;background:#fff;border:1.5px solid #DAD5CB;color:#0A1022;padding:9px 16px;border-radius:999px;">Berks County</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.8px;font-size:15px;background:#fff;border:1.5px solid #DAD5CB;color:#0A1022;padding:9px 16px;border-radius:999px;">Greater Philadelphia</span>
+        </div>
+      </div>
+      <div style="position:relative;overflow:hidden;border-radius:16px;background:#0A1022;min-height:340px;display:flex;flex-direction:column;justify-content:flex-end;padding:36px;">
+        <div style="position:absolute;inset:0;background:radial-gradient(90% 80% at 80% 0%,rgba(255,90,31,.5),transparent 55%),radial-gradient(70% 70% at 10% 100%,rgba(255,176,32,.32),transparent 55%);"></div>
+        <i class="ph-fill ph-flame" style="position:absolute;top:30px;right:34px;color:rgba(255,90,31,.85);font-size:84px;"></i>
+        <div style="position:relative;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(56px,7vw,84px);line-height:.9;color:#FF5A1F;">Decades</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;font-size:18px;color:#D7DCEC;margin-top:6px;">of keeping PA warm</div>
+          <div style="height:1px;background:rgba(255,255,255,.12);margin:22px 0;"></div>
+          <div style="display:flex;gap:28px;flex-wrap:wrap;">
+            <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:32px;color:#F6F4EF;">5</div><div style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#9AA3C0;">Counties served</div></div>
+            <div><div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:32px;color:#F6F4EF;">24/7</div><div style="font-size:13px;letter-spacing:1px;text-transform:uppercase;color:#9AA3C0;">Emergency line</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Billing update banner ============ -->
+  <sc-if value="{{ showBilling }}" hint-placeholder-val="{{ true }}">
+  <section style="background:#F6F4EF;padding:0 clamp(20px,5vw,80px) clamp(56px,7vw,96px);">
+    <div style="max-width:1180px;margin:0 auto;background:#FFF6EE;border:1px solid #F4D9C2;border-left:5px solid #FF5A1F;border-radius:12px;padding:clamp(28px,4vw,44px);display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(24px,3vw,44px);align-items:center;">
+      <div style="display:flex;gap:18px;align-items:flex-start;">
+        <span style="flex:none;width:54px;height:54px;border-radius:12px;background:#FF5A1F;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(255,90,31,.28);"><i class="ph-fill ph-envelope" style="color:#fff;font-size:27px;"></i></span>
+        <div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-size:14px;color:#E8430A;">A simple update to your billing</span>
+          <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(26px,3vw,38px);line-height:1;margin:6px 0 0;color:#0A1022;">We're moving to email invoices.</h3>
+          <p style="margin:10px 0 0;color:#5A4632;font-size:16px;line-height:1.55;max-width:520px;">Nothing you need to do — and paper is always available on request.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:center;gap:12px;color:#3C4256;font-size:16px;"><i class="ph-bold ph-receipt" style="color:#FF5A1F;font-size:20px;"></i>Your delivery ticket <strong style="color:#0A1022;font-weight:700;">is</strong> your invoice.</div>
+        <div style="display:flex;align-items:center;gap:12px;color:#3C4256;font-size:16px;"><i class="ph-bold ph-paper-plane-tilt" style="color:#FF5A1F;font-size:20px;"></i>A copy is emailed to you the next day.</div>
+        <div style="display:flex;align-items:center;gap:12px;color:#3C4256;font-size:16px;"><i class="ph-bold ph-printer" style="color:#FF5A1F;font-size:20px;"></i>Prefer paper? Just ask — we'll mail it.</div>
+      </div>
+    </div>
+  </section>
+  </sc-if>
+
+  <!-- ============ Payment & portal ============ -->
+  <section id="payment" style="background:#0A1022;padding:clamp(64px,9vw,120px) clamp(20px,5vw,80px);">
+    <div style="max-width:1180px;margin:0 auto;">
+      <div style="text-align:center;max-width:640px;margin:0 auto;">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:3px;font-size:15px;color:#FF5A1F;">Payment &amp; account</span>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(42px,5.5vw,74px);line-height:.92;letter-spacing:-.5px;margin:12px 0 0;color:#F6F4EF;">Pay Your Way.</h2>
+        <p style="margin:18px 0 0;font-size:clamp(16px,1.5vw,19px);line-height:1.55;color:#AEB6D2;">Quick, secure, and however's easiest for you. Manage your account online any time.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:44px;">
+        <div style="background:#141C3A;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:30px 26px;text-align:center;">
+          <i class="ph-bold ph-bank" style="color:#FF5A1F;font-size:34px;"></i>
+          <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:23px;margin:14px 0 6px;color:#F6F4EF;">Pay by E-Check</h3>
+          <p style="margin:0;color:#9AA3C0;font-size:15px;line-height:1.5;">Direct from your bank — no fees, no fuss.</p>
+        </div>
+        <div style="background:#141C3A;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:30px 26px;text-align:center;">
+          <i class="ph-bold ph-credit-card" style="color:#FF5A1F;font-size:34px;"></i>
+          <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:23px;margin:14px 0 6px;color:#F6F4EF;">Credit Card</h3>
+          <p style="margin:0 0 10px;color:#9AA3C0;font-size:15px;line-height:1.5;">Visa, Mastercard &amp; Discover accepted.</p>
+          <div style="display:flex;gap:7px;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.5px;color:#7E88AC;"><span style="border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:3px 8px;">VISA</span><span style="border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:3px 8px;">MC</span><span style="border:1px solid rgba(255,255,255,.14);border-radius:4px;padding:3px 8px;">DISC</span></div>
+        </div>
+        <div style="background:#141C3A;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:30px 26px;text-align:center;">
+          <i class="ph-bold ph-phone-call" style="color:#FF5A1F;font-size:34px;"></i>
+          <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.5px;font-size:23px;margin:14px 0 6px;color:#F6F4EF;">Pay by Phone</h3>
+          <p style="margin:0 0 8px;color:#9AA3C0;font-size:15px;line-height:1.5;">Call us and we'll take care of it.</p>
+          <a href="tel:6104588389" style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:#F6F4EF;" style-hover="color:#FF5A1F;">(610) 458-8389</a>
+        </div>
+      </div>
+      <div style="margin-top:24px;background:linear-gradient(120deg,#FF6F3C,#E8430A);border-radius:16px;padding:clamp(28px,4vw,40px);display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:16px;">
+          <i class="ph-fill ph-lock-key" style="color:#0A1022;font-size:40px;"></i>
+          <div>
+            <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(26px,3vw,38px);line-height:1;margin:0;color:#0A1022;">Secure Account Portal</h3>
+            <p style="margin:6px 0 0;color:#3A1505;font-weight:600;font-size:16px;">View statements, make payments &amp; track deliveries.</p>
+          </div>
+        </div>
+        <a href="https://secure.ssswebportal.com" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#0A1022;color:#FF5A1F;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:19px;padding:17px 30px;border-radius:6px;" style-hover="background:#141C3A;">Go to Portal<i class="ph-bold ph-arrow-up-right"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Blog / resources ============ -->
+  <section id="blog" style="background:#F6F4EF;color:#0A1022;padding:clamp(64px,9vw,120px) clamp(20px,5vw,80px);">
+    <div style="max-width:1180px;margin:0 auto;">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;">
+        <div>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:3px;font-size:15px;color:#E8430A;">Resources &amp; tips</span>
+          <h2 style="font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(42px,5.5vw,72px);line-height:.92;letter-spacing:-.5px;margin:10px 0 0;">From the Blog</h2>
+        </div>
+        <a href="#" style="display:inline-flex;align-items:center;gap:9px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:17px;color:#0A1022;border-bottom:2px solid #FF5A1F;padding-bottom:3px;" style-hover="color:#FF5A1F;">View all articles<i class="ph-bold ph-arrow-right"></i></a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:40px;">
+        <a href="#" style="background:#fff;border:1px solid #E7E2D8;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.04);" style-hover="box-shadow:0 16px 40px rgba(10,16,34,.12);">
+          <div style="position:relative;height:170px;background:linear-gradient(150deg,#0A1022,#1C2750);display:flex;align-items:center;justify-content:center;overflow:hidden;"><div style="position:absolute;inset:0;background:radial-gradient(70% 80% at 80% 10%,rgba(255,90,31,.4),transparent 60%);"></div><i class="ph-fill ph-house-line" style="color:#FF5A1F;font-size:60px;position:relative;"></i></div>
+          <div style="padding:24px;">
+            <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-size:12.5px;color:#E8430A;">Homeowner Guide</span>
+            <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:25px;line-height:1.05;margin:8px 0 0;color:#0A1022;">Buying a House with Propane Heat</h3>
+            <p style="margin:10px 0 0;color:#5A6072;font-size:15px;line-height:1.5;">What to check, what to ask, and how to set up service before you move in.</p>
+            <span style="display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:14px;color:#FF5A1F;">Read more<i class="ph-bold ph-arrow-right"></i></span>
+          </div>
+        </a>
+        <a href="#" style="background:#fff;border:1px solid #E7E2D8;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.04);" style-hover="box-shadow:0 16px 40px rgba(10,16,34,.12);">
+          <div style="position:relative;height:170px;background:linear-gradient(150deg,#E8430A,#FF6F3C);display:flex;align-items:center;justify-content:center;overflow:hidden;"><div style="position:absolute;inset:0;background:radial-gradient(70% 80% at 20% 90%,rgba(255,200,90,.5),transparent 60%);"></div><i class="ph-fill ph-cooking-pot" style="color:#0A1022;font-size:60px;position:relative;"></i></div>
+          <div style="padding:24px;">
+            <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-size:12.5px;color:#E8430A;">Seasonal</span>
+            <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:25px;line-height:1.05;margin:8px 0 0;color:#0A1022;">Preparing Your Outdoor Kitchen for Summer</h3>
+            <p style="margin:10px 0 0;color:#5A6072;font-size:15px;line-height:1.5;">Get your grill, fire pit, and patio appliances ready for the season.</p>
+            <span style="display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:14px;color:#FF5A1F;">Read more<i class="ph-bold ph-arrow-right"></i></span>
+          </div>
+        </a>
+        <a href="#" style="background:#fff;border:1px solid #E7E2D8;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.04);" style-hover="box-shadow:0 16px 40px rgba(10,16,34,.12);">
+          <div style="position:relative;height:170px;background:linear-gradient(150deg,#141C3A,#0A1022);display:flex;align-items:center;justify-content:center;overflow:hidden;"><div style="position:absolute;inset:0;background:radial-gradient(70% 80% at 50% 20%,rgba(255,176,32,.34),transparent 60%);"></div><i class="ph-fill ph-gauge" style="color:#FFB020;font-size:60px;position:relative;"></i></div>
+          <div style="padding:24px;">
+            <span style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-size:12.5px;color:#E8430A;">Efficiency</span>
+            <h3 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:25px;line-height:1.05;margin:8px 0 0;color:#0A1022;">Why Is My Propane Usage So High?</h3>
+            <p style="margin:10px 0 0;color:#5A6072;font-size:15px;line-height:1.5;">Common causes of higher-than-normal usage — and how to bring it down.</p>
+            <span style="display:inline-flex;align-items:center;gap:7px;margin-top:16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:14px;color:#FF5A1F;">Read more<i class="ph-bold ph-arrow-right"></i></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Safety callout ============ -->
+  <section id="safety" style="position:relative;overflow:hidden;background:#0A1022;padding:clamp(64px,9vw,110px) clamp(20px,5vw,80px);">
+    <div style="position:absolute;inset:0;background:radial-gradient(80% 120% at 90% 50%,rgba(255,90,31,.4),transparent 55%),radial-gradient(60% 100% at 0% 100%,rgba(255,176,32,.22),transparent 55%);"></div>
+    <div style="position:relative;max-width:1180px;margin:0 auto;display:flex;flex-wrap:wrap;gap:28px;align-items:center;justify-content:space-between;">
+      <div style="max-width:620px;">
+        <span style="display:inline-flex;align-items:center;gap:9px;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;font-size:15px;color:#FF5A1F;"><i class="ph-fill ph-shield-check"></i>Your safety matters</span>
+        <h2 style="font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(48px,7vw,96px);line-height:.88;letter-spacing:-.5px;margin:12px 0 0;color:#F6F4EF;">Safety First.</h2>
+        <p style="margin:18px 0 0;font-size:clamp(16px,1.6vw,20px);line-height:1.5;color:#AEB6D2;">Know the signs of a leak, what to do in an emergency, and how to keep your system running safely all year.</p>
+      </div>
+      <a href="#" style="display:inline-flex;align-items:center;gap:10px;background:#FF5A1F;color:#0A1022;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:20px;padding:18px 32px;border-radius:6px;box-shadow:0 12px 30px rgba(255,90,31,.34);" style-hover="background:#FF6F3C;">View Safety Resources<i class="ph-bold ph-arrow-right"></i></a>
+    </div>
+  </section>
+
+  <!-- ============ Footer ============ -->
+  <footer style="background:#070B18;color:#9AA3C0;padding:clamp(56px,7vw,88px) clamp(20px,5vw,80px) 0;">
+    <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:40px;padding-bottom:48px;">
+      <div>
+        <a href="#" style="display:inline-flex;align-items:center;margin-bottom:18px;">
+          <img src="assets/styer-logo-white.png" alt="Styer Propane, LLC" style="height:48px;width:auto;display:block;" />
+        </a>
+        <p style="margin:0 0 16px;line-height:1.6;font-size:15px;max-width:280px;">Family-owned propane delivery for Chester County and the greater Philadelphia area.</p>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14.5px;line-height:1.55;"><i class="ph-bold ph-map-pin" style="color:#FF5A1F;font-size:17px;margin-top:2px;"></i><span>520 Pottstown Pike, Chester Springs, PA 19425<br>PO Box 387, Uwchland, PA 19480</span></div>
+      </div>
+      <div>
+        <h4 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-size:15px;color:#F6F4EF;margin:0 0 16px;">Explore</h4>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px;font-size:15px;">
+          <li><a href="#" style="color:#9AA3C0;" style-hover="color:#FF5A1F;">Home</a></li>
+          <li><a href="#payment" style="color:#9AA3C0;" style-hover="color:#FF5A1F;">Payment Options</a></li>
+          <li><a href="#" style="color:#9AA3C0;" style-hover="color:#FF5A1F;">Budget Plan</a></li>
+          <li><a href="#safety" style="color:#9AA3C0;" style-hover="color:#FF5A1F;">Safety</a></li>
+          <li><a href="#" style="color:#9AA3C0;" style-hover="color:#FF5A1F;">FAQs</a></li>
+          <li><a href="#blog" style="color:#9AA3C0;" style-hover="color:#FF5A1F;">Blog</a></li>
+          <li><a href="#" style="color:#9AA3C0;" style-hover="color:#FF5A1F;">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-size:15px;color:#F6F4EF;margin:0 0 16px;">Get in touch</h4>
+        <a href="tel:6104588389" style="display:flex;align-items:center;gap:10px;margin-bottom:12px;color:#F6F4EF;" style-hover="color:#FF5A1F;"><i class="ph-fill ph-phone-call" style="color:#FF5A1F;font-size:20px;"></i><span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;letter-spacing:.5px;">(610) 458-8389</span></a>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px;font-size:14.5px;"><i class="ph-bold ph-printer" style="color:#7E88AC;font-size:17px;"></i>Fax (610) 458-0689</div>
+        <a href="#" style="display:inline-flex;align-items:center;gap:9px;background:#FF5A1F;color:#0A1022;font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:16px;padding:13px 22px;border-radius:5px;" style-hover="background:#FF6F3C;">Schedule a Delivery<i class="ph-bold ph-arrow-right"></i></a>
+      </div>
+      <div>
+        <h4 style="font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-size:15px;color:#F6F4EF;margin:0 0 16px;">Member</h4>
+        <div style="width:118px;height:118px;border-radius:50%;border:2px solid rgba(255,90,31,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px;">
+          <i class="ph-fill ph-flame" style="color:#FF5A1F;font-size:26px;"></i>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:1px;font-size:17px;color:#F6F4EF;line-height:.95;margin-top:4px;">Propane</span>
+          <span style="font-family:'Barlow Condensed',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;font-size:10px;color:#9AA3C0;margin-top:2px;">Exceptional Energy®</span>
+        </div>
+      </div>
+    </div>
+    <div style="max-width:1180px;margin:0 auto;border-top:1px solid rgba(255,255,255,.08);padding:22px 0;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;font-size:13.5px;color:#6B7491;">
+      <span>© <!-- year -->2026 Styer Propane, LLC. All rights reserved.</span>
+      <span style="display:flex;gap:20px;flex-wrap:wrap;"><a href="#" style="color:#6B7491;" style-hover="color:#FF5A1F;">Privacy</a><a href="#" style="color:#6B7491;" style-hover="color:#FF5A1F;">Terms</a></span>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:2400},&quot;paletteVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;ember&quot;,&quot;crimson&quot;,&quot;amber&quot;,&quot;midnight&quot;],&quot;default&quot;:&quot;ember&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;showBillingBanner&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  state = {
+    palette: (this.props && this.props.paletteVariant) || 'ember',
+    showBilling: !(this.props && this.props.showBillingBanner === false),
+  };
+  renderVals() {
+    const T = {
+      ember: {
+        label: 'Ember',
+        field: 'linear-gradient(150deg,#FF6F3C,#E8430A 60%,#C9380A)',
+        glow: 'radial-gradient(90% 80% at 88% 6%,rgba(255,214,130,.55),transparent 55%),radial-gradient(70% 80% at 0% 100%,rgba(150,40,0,.4),transparent 55%)',
+        text: '#0A1022', sub: '#3A1505',
+        kickerBorder: 'rgba(10,16,34,.4)', kickerText: '#0A1022',
+        ctaBg: '#0A1022', ctaText: '#FF5A1F',
+        outlineText: '#0A1022', outlineBorder: 'rgba(10,16,34,.4)',
+        circle: '#0A1022', circleIcon: '#FF5A1F',
+      },
+      crimson: {
+        label: 'Crimson',
+        field: 'linear-gradient(150deg,#FF4632,#D11E14 60%,#9E140C)',
+        glow: 'radial-gradient(90% 80% at 88% 6%,rgba(255,170,110,.5),transparent 55%),radial-gradient(70% 80% at 0% 100%,rgba(90,10,5,.5),transparent 55%)',
+        text: '#FFF3EE', sub: '#FFD9CE',
+        kickerBorder: 'rgba(255,255,255,.4)', kickerText: '#FFE8E0',
+        ctaBg: '#1A0606', ctaText: '#FF7A57',
+        outlineText: '#FFF3EE', outlineBorder: 'rgba(255,255,255,.4)',
+        circle: '#1A0606', circleIcon: '#FF7A57',
+      },
+      amber: {
+        label: 'Amber',
+        field: 'linear-gradient(150deg,#FFC24D,#F2941B 60%,#D9760C)',
+        glow: 'radial-gradient(90% 80% at 88% 6%,rgba(255,240,180,.6),transparent 55%),radial-gradient(70% 80% at 0% 100%,rgba(140,70,0,.35),transparent 55%)',
+        text: '#2A1A02', sub: '#5A3D08',
+        kickerBorder: 'rgba(42,26,2,.35)', kickerText: '#2A1A02',
+        ctaBg: '#1C1206', ctaText: '#FFB020',
+        outlineText: '#2A1A02', outlineBorder: 'rgba(42,26,2,.35)',
+        circle: '#1C1206', circleIcon: '#FFB020',
+      },
+      midnight: {
+        label: 'Midnight',
+        field: 'linear-gradient(150deg,#16203F,#0A1022 65%,#070B18)',
+        glow: 'radial-gradient(90% 80% at 88% 6%,rgba(255,90,31,.42),transparent 55%),radial-gradient(70% 80% at 0% 100%,rgba(255,176,32,.18),transparent 55%)',
+        text: '#F6F4EF', sub: '#AEB6D2',
+        kickerBorder: 'rgba(255,90,31,.45)', kickerText: '#FFB58C',
+        ctaBg: '#FF5A1F', ctaText: '#0A1022',
+        outlineText: '#F6F4EF', outlineBorder: 'rgba(255,255,255,.26)',
+        circle: '#FF5A1F', circleIcon: '#0A1022',
+      },
+    };
+    const order = ['ember', 'crimson', 'amber', 'midnight'];
+    const key = T[this.state.palette] ? this.state.palette : 'ember';
+    const t = T[key];
+    const phoneAccents = { ember: ['#FF5A1F', '#0A1022'], crimson: ['#FF7A57', '#1A0606'], amber: ['#FFB020', '#1C1206'], midnight: ['#FF5A1F', '#0A1022'] };
+    const pa = phoneAccents[key];
+
+    const pill = { border: 'none', cursor: 'pointer', fontFamily: "'Barlow Condensed',sans-serif", fontWeight: 700, fontSize: '14px', letterSpacing: '1px', textTransform: 'uppercase', padding: '8px 14px', borderRadius: '999px', transition: 'all .15s', lineHeight: 1 };
+    const on = { background: '#FF5A1F', color: '#0A1022' };
+    const off = { background: 'transparent', color: '#C2C9DE' };
+    const palettes = order.map(k => ({
+      key: k, label: T[k].label,
+      onSelect: () => this.setState({ palette: k }),
+      btnStyle: { ...pill, ...(k === key ? on : off) },
+    }));
+
+    const ctaBase = { display: 'inline-flex', alignItems: 'center', gap: '10px', fontFamily: "'Barlow Condensed',sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', fontSize: '19px', borderRadius: '5px' };
+
+    return {
+      showBilling: this.state.showBilling,
+      palettes,
+      accentColor: t.circleIcon,
+      circleIconColor: t.circleIcon,
+      phoneAccent: pa[0],
+      phoneAccentIcon: pa[1],
+      fieldStyle: { position: 'absolute', inset: 0, zIndex: 3, overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'flex-start', padding: 'clamp(48px,7vw,96px) clamp(28px,5vw,72px)', clipPath: 'polygon(0 0, 64% 0, 46% 100%, 0 100%)', background: t.field },
+      glowStyle: { position: 'absolute', inset: 0, background: t.glow, pointerEvents: 'none' },
+      kickerStyle: { display: 'inline-flex', alignItems: 'center', gap: '9px', width: 'fit-content', border: '1.5px solid ' + t.kickerBorder, color: t.kickerText, fontFamily: "'Barlow Condensed',sans-serif", fontWeight: 700, textTransform: 'uppercase', letterSpacing: '2.5px', fontSize: '14px', padding: '7px 16px', borderRadius: '999px' },
+      h1Style: { fontFamily: "'Barlow Condensed',sans-serif", fontWeight: 800, textTransform: 'uppercase', fontSize: 'clamp(46px,5.6vw,82px)', lineHeight: 0.86, letterSpacing: '-1px', margin: '22px 0 0', color: t.text, textWrap: 'balance' },
+      subStyle: { maxWidth: '460px', margin: '20px 0 0', fontSize: 'clamp(17px,1.5vw,20px)', lineHeight: 1.45, color: t.sub, fontWeight: 500 },
+      ctaPrimaryStyle: { ...ctaBase, background: t.ctaBg, color: t.ctaText, padding: '17px 30px', boxShadow: '0 12px 30px rgba(0,0,0,.18)' },
+      ctaOutlineStyle: { ...ctaBase, background: 'transparent', color: t.outlineText, border: '2px solid ' + t.outlineBorder, padding: '15px 28px' },
+      phoneWrapStyle: { display: 'inline-flex', alignItems: 'center', gap: '14px', marginTop: '32px', color: t.text },
+      phoneCircleStyle: { flex: 'none', width: '54px', height: '54px', borderRadius: '50%', background: t.circle, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 22px rgba(0,0,0,.2)' },
+      phoneLabelStyle: { display: 'block', fontFamily: "'Barlow Condensed',sans-serif", fontWeight: 600, textTransform: 'uppercase', letterSpacing: '2px', fontSize: '12px', color: t.sub },
+      phoneNumStyle: { display: 'block', fontFamily: "'Barlow Condensed',sans-serif", fontWeight: 800, fontSize: 'clamp(30px,3.6vw,44px)', lineHeight: 0.95, letterSpacing: '.5px', color: t.text },
+    };
+  }
+}
+</script>
+</body>
+</html>
